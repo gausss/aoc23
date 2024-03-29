@@ -1,6 +1,6 @@
 enum class CubeColor { RED, GREEN, BLUE }
 data class Cube(val color: CubeColor, val amount: Int)
-data class Game(val id: Int, val cubes: Set<Cube>) {
+data class Game(val id: Int, val cubes: List<Cube>) {
     fun isValid(): Boolean {
         val anyViolation = this.cubes.any {
             when (it.color) {
@@ -16,9 +16,9 @@ data class Game(val id: Int, val cubes: Set<Cube>) {
 
 fun main() {
 
-    fun parseCubeDraws(draws: String): Set<Cube> {
+    fun parseCubeDraws(draws: String): List<Cube> {
         return draws.split(',')
-            .map { cubeString -> cubeString.trim().split(' ', limit = 2) }
+            .map { cubeString -> cubeString.trim().split(' ') }
             .mapNotNull { cubeSplit ->
                 val (amount, color) = cubeSplit
                 when (color) {
@@ -27,14 +27,14 @@ fun main() {
                     "blue" -> Cube(CubeColor.BLUE, amount.toInt())
                     else -> null
                 }
-            }.toSet()
+            }
     }
 
     fun parseGame(line: String): Game {
         val (gameDefinition, draws) = line.split(':')
 
         val gameId = gameDefinition.split(' ')[1].toInt()
-        val cubes = draws.split(';').flatMap { parseCubeDraws(it) }.toSet()
+        val cubes = draws.split(';').flatMap { parseCubeDraws(it) }
 
         return Game(gameId, cubes)
     }

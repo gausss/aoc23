@@ -10,3 +10,4 @@ build
 
 # others
 .DS_Store
+/out/*
