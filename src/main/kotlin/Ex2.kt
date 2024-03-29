@@ -40,14 +40,14 @@ fun main() {
     }
 
 
-    fun part1(input: List<String>): Int {
+    fun solve(input: List<String>): Int {
         return input.map { line -> parseGame(line) }.filter { game -> game.isValid() }.sumOf { it.id }
     }
 
 
     val testInput = readInput("Ex2_test")
-    check(part1(testInput) == 8)
+    check(solve(testInput) == 8)
 
     val input = readInput("Ex2")
-    println(part1(input))
+    println(solve(input))
 }

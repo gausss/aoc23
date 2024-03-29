@@ -5,14 +5,14 @@ fun main() {
         return "$firstDigit$lastDigit".toInt()
     }
 
-    fun part1(input: List<String>): Int {
+    fun solve(input: List<String>): Int {
         return input.sumOf { line -> parseEnclosingDigit(line) }
     }
 
 
     val testInput = readInput("Ex1_test")
-    check(part1(testInput) == 142)
+    check(solve(testInput) == 142)
 
     val input = readInput("Ex1")
-    println(part1(input))
+    println(solve(input))
 }
