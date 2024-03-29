@@ -33,7 +33,7 @@ fun main() {
     fun parseGame(line: String): Game {
         val (gameDefinition, draws) = line.split(':')
 
-        val gameId = gameDefinition.split(' ')[1].toInt()
+        val gameId = gameDefinition.split(' ').last().toInt()
         val cubes = draws.split(';').flatMap { parseCubeDraws(it) }
 
         return Game(gameId, cubes)

@@ -1,12 +1,12 @@
 fun main() {
-    fun parseEnclosdingDigit(line: String): Int {
+    fun parseEnclosingDigit(line: String): Int {
         val firstDigit = line.first { it.isDigit() }
         val lastDigit = line.last { it.isDigit() }
         return "$firstDigit$lastDigit".toInt()
     }
 
     fun part1(input: List<String>): Int {
-        return input.sumOf { line -> parseEnclosdingDigit(line) }
+        return input.sumOf { line -> parseEnclosingDigit(line) }
     }
 
 
