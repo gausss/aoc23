@@ -1,18 +1,18 @@
 fun main() {
-    fun part1(input: List<String>): Int {
-        return 0
+    fun parseEnclosdingDigit(line: String): Int {
+        val firstDigit = line.first { it.isDigit() }
+        val lastDigit = line.last { it.isDigit() }
+        return "$firstDigit$lastDigit".toInt()
     }
 
-    fun part2(input: List<String>): Int {
-        return 0
+    fun part1(input: List<String>): Int {
+        return input.sumOf { parseEnclosdingDigit(it) }
     }
+
 
     val testInput = readInput("Ex1_test")
-    println(testInput[0]);
-    check(part1(testInput) == 3)
-    check(part2(testInput) == 34)
+    check(part1(testInput) == 142)
 
     val input = readInput("Ex1")
     println(part1(input))
-    println(part2(input))
 }
