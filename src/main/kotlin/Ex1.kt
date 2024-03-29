@@ -6,7 +6,7 @@ fun main() {
     }
 
     fun part1(input: List<String>): Int {
-        return input.sumOf { parseEnclosdingDigit(it) }
+        return input.sumOf { line -> parseEnclosdingDigit(line) }
     }
 
 
