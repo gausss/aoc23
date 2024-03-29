@@ -3,3 +3,10 @@
 
 # Ignore Gradle build output directory
 build
+
+# IDE
+.vscode
+.idea
+
+# others
+.DS_Store
