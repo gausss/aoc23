@@ -66,9 +66,9 @@ fun main() {
     }
 
 
-    val testInput = readInput("Ex3_test")
+    val testInput = readInputLines("Ex3_test")
     check(solve(testInput) == 4361)
 
-    val input = readInput("Ex3")
+    val input = readInputLines("Ex3")
     println(solve(input))
 }

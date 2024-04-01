@@ -8,13 +8,11 @@ data class ScratchCard(val winningNumbers: Set<String>, val scratchedNumbers: Se
 }
 
 fun main() {
-    val splitWhitespace = "\\s+".toRegex()
-
     fun parseCard(line: String): ScratchCard {
         val (_, numbers) = line.split(':')
         val (winningNumbersString, cardNumbersString) = numbers.split('|').map { it.trim() }
-        val winningNumbers = winningNumbersString.split(splitWhitespace).toSet()
-        val cardNumbers = cardNumbersString.split(splitWhitespace).toSet()
+        val winningNumbers = winningNumbersString.split(WHITESPACE_REGEX).toSet()
+        val cardNumbers = cardNumbersString.split(WHITESPACE_REGEX).toSet()
 
         return ScratchCard(winningNumbers, cardNumbers)
     }
@@ -24,9 +22,9 @@ fun main() {
     }
 
 
-    val testInput = readInput("Ex4_test")
+    val testInput = readInputLines("Ex4_test")
     check(solve(testInput) == 13)
 
-    val input = readInput("Ex4")
+    val input = readInputLines("Ex4")
     println(solve(input))
 }

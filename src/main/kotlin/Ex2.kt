@@ -45,9 +45,9 @@ fun main() {
     }
 
 
-    val testInput = readInput("Ex2_test")
+    val testInput = readInputLines("Ex2_test")
     check(solve(testInput) == 8)
 
-    val input = readInput("Ex2")
+    val input = readInputLines("Ex2")
     println(solve(input))
 }

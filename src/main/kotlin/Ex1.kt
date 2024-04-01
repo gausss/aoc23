@@ -10,9 +10,9 @@ fun main() {
     }
 
 
-    val testInput = readInput("Ex1_test")
+    val testInput = readInputLines("Ex1_test")
     check(solve(testInput) == 142)
 
-    val input = readInput("Ex1")
+    val input = readInputLines("Ex1")
     println(solve(input))
 }
