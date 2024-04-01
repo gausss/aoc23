@@ -1,10 +1,10 @@
-data class MappingGroup(val mappings: List<RangeMapping>) {
+data class AlmanacMappingTable(val mappings: List<AlmanacMapping>) {
     fun map(source: Long): Long {
         return mappings.find { it.canMap(source) }?.map(source) ?: source
     }
 }
 
-data class RangeMapping(val destinationStart: Long, val sourceStart: Long, val length: Long) {
+data class AlmanacMapping(val destinationStart: Long, val sourceStart: Long, val length: Long) {
     private val sourceRange = sourceStart..<sourceStart + length
     private val destinationRange = destinationStart..<destinationStart + length
 
@@ -19,30 +19,29 @@ data class RangeMapping(val destinationStart: Long, val sourceStart: Long, val l
 }
 
 fun main() {
-    fun parseSeedMapping(mappingString: String): MappingGroup {
+    fun parseSeedMapping(mappingString: String): AlmanacMappingTable {
         val mappings = mappingString.split(':').last().trim().split("\n")
             .map { mappingLine ->
                 val (destination, source, range) = mappingLine.split(WHITESPACE_REGEX).map { it.toLong() }
-                RangeMapping(destination, source, range)
+                AlmanacMapping(destination, source, range)
             }
-        return MappingGroup(mappings)
+        return AlmanacMappingTable(mappings)
     }
 
     fun parseSeedNumbers(seeds: String): List<Long> {
         return seeds.split(':').last().trim().split(WHITESPACE_REGEX).map { it.toLong() }
     }
 
-    fun getSeedLocation(seed: Long, mappings: List<MappingGroup>): Long {
+    fun getSeedLocation(seed: Long, mappings: List<AlmanacMappingTable>): Long {
         return mappings.fold(seed) { destination, mapping -> mapping.map(destination) }
     }
 
     fun solve(input: String): Long {
         val splits = input.split("%")
         val seeds = parseSeedNumbers(splits.first())
-        val mappings = splits.tail().map { parseSeedMapping(it) }
-        println("Parsing Done")
+        val almanac = splits.tail().map { parseSeedMapping(it) }
 
-        return seeds.minOf { getSeedLocation(it, mappings) }
+        return seeds.minOf { getSeedLocation(it, almanac) }
     }
 
 
