@@ -17,14 +17,11 @@ fun main() {
         return distances
     }
 
-    fun getWinningDistances(distances: List<Int>, record: Int): List<Int> {
-        return distances.filter { it > record }
-    }
 
     fun solve(input: List<String>): Int {
         val (times, distanceRecords) = input.map { parseNumbers(it) }
         return times.map { getPossibleDistances(it) }
-            .mapIndexed { index, distances -> getWinningDistances(distances, distanceRecords.elementAt(index)) }
+            .mapIndexed { index, distances -> distances.filter { it > distanceRecords[index] } }
             .fold(1) { acc, winningDistances -> winningDistances.size * acc }
     }
 
