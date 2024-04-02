@@ -1,5 +1,7 @@
 enum class CubeColor { RED, GREEN, BLUE }
+
 data class Cube(val color: CubeColor, val amount: Int)
+
 data class Game(val id: Int, val cubes: List<Cube>) {
     fun isValid(): Boolean {
         val anyViolation = this.cubes.any {
