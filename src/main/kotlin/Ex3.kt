@@ -1,18 +1,3 @@
-data class Position(val x: Int, val y: Int) {
-    fun getAdjacent(): Set<Position> {
-        return setOf(
-            Position(x - 1, y),
-            Position(x + 1, y),
-            Position(x, y - 1),
-            Position(x, y + 1),
-            Position(x - 1, y + 1),
-            Position(x - 1, y - 1),
-            Position(x + 1, y + 1),
-            Position(x + 1, y - 1)
-        )
-    }
-}
-
 data class SchematicNumber(val value: Int, val start: Position, val end: Position) {
     private fun isAdjacentTo(position: Position): Boolean {
         val numberRange = (start.x..end.x).map { Position(it, start.y) }.toSet()
