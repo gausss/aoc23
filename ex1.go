@@ -19,6 +19,7 @@ func computePolymers(input []string, template map[string]int) (result int) {
 	min, max := interval(polymer)
 	return (max-min)/2 + 1
 }
+
 func polymerize(template map[string]int) (polymer map[string]int) {
 	polymer = make(map[string]int)
 	for token, count := range template {
@@ -31,6 +32,7 @@ func polymerize(template map[string]int) (polymer map[string]int) {
 	}
 	return
 }
+
 func interval(occurences map[string]int) (min int, max int) {
 	byCharacter := make(map[byte]int)
 	for token, count := range occurences {
