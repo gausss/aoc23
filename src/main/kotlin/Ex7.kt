@@ -1,8 +1,8 @@
-enum class HandType {
+private enum class HandType {
     HIGH_CARD, ONE_PAIR, TWO_PAIR, THREE_OF_KIND, FULL_HOUSE, FOUR_OF_KIND, FIVE_OF_KIND
 }
 
-data class Hand(val cards: String, val bid: Int) : Comparable<Hand> {
+private data class Hand(val cards: String, val bid: Int) : Comparable<Hand> {
     private val strengths = listOf('2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A')
     private fun getType(): HandType {
         val cardCounts = cards.groupingBy { it }.eachCount().values
@@ -37,21 +37,20 @@ data class Hand(val cards: String, val bid: Int) : Comparable<Hand> {
     }
 }
 
+private fun parseHand(line: String): Hand {
+    val (cards, bid) = line.split(' ')
+    return Hand(cards, bid.toInt())
+}
+
+private fun solve(input: List<String>): Int {
+    return input.map { parseHand(it) }
+        .sorted()
+        .mapIndexed { index, hand -> (index + 1) * hand.bid }
+        .sum()
+}
+
 
 fun main() {
-
-    fun parseHand(line: String): Hand {
-        val (cards, bid) = line.split(' ')
-        return Hand(cards, bid.toInt())
-    }
-
-    fun solve(input: List<String>): Int {
-        return input.map { parseHand(it) }
-            .sorted()
-            .mapIndexed { index, hand -> (index + 1) * hand.bid }
-            .sum()
-    }
-
     val testInput = readInputLines("Ex7_test")
     check(solve(testInput) == 6440)
 

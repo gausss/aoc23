@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.9.23"
+    kotlin("jvm") version "2.1.0"
     application
 }
 
@@ -22,12 +22,9 @@ tasks.test {
 }
 
 tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "21"
+    kotlinOptions.jvmTarget = "23"
 }
 
-application {
-    mainClass.set("MainKt")
-}
 kotlin {
-    jvmToolchain(21)
+    jvmToolchain(23)
 }

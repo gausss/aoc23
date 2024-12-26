@@ -1,4 +1,4 @@
-enum class Direction {
+private enum class Direction {
     LEFT, UP, RIGHT, DOWN;
 
     fun opposite(): Direction {
@@ -11,7 +11,7 @@ enum class Direction {
     }
 }
 
-enum class PipeType {
+private enum class PipeType {
     NORT_WEST_J, SOUTH_WEST_7, SOUTH_EAST_F, EAST_NORTH_L, VERTICAL, HORIZONTAL, START, NONE;
 
     companion object {
@@ -30,7 +30,7 @@ enum class PipeType {
     }
 }
 
-data class Pipe(val type: PipeType, val position: Position) {
+private data class Pipe(val type: PipeType, val position: Position) {
 
     fun getPossibleDirections(comingFrom: Direction?): Set<Direction> {
         val comingFromDirections = setOfNotNull(comingFrom?.opposite())
@@ -159,45 +159,44 @@ data class Pipe(val type: PipeType, val position: Position) {
     }
 }
 
-fun main() {
+private fun parsePipes(input: List<String>): Map<Position, Pipe> {
+    return input.flatMapIndexed { y, row ->
+        row.mapIndexed { x, sign ->
+            Pipe(
+                PipeType.fromSign(sign),
+                Position(x, y)
+            )
+        }
+    }.associateBy { pipe -> pipe.position }
+}
 
-    fun parsePipes(input: List<String>): Map<Position, Pipe> {
-        return input.flatMapIndexed { y, row ->
-            row.mapIndexed { x, sign ->
-                Pipe(
-                    PipeType.fromSign(sign),
-                    Position(x, y)
-                )
-            }
-        }.associateBy { pipe -> pipe.position }
-    }
+private fun solve(input: List<String>): Int {
+    val pipes = parsePipes(input)
+    val start = pipes.values.find { pipe -> pipe.type == PipeType.START }
+    checkNotNull(start)
 
-    fun solve(input: List<String>): Int {
-        val pipes = parsePipes(input)
-        val start = pipes.values.find { pipe -> pipe.type == PipeType.START }
-        checkNotNull(start)
+    var stepCounter = 0
+    var currentPipe: Pipe = start
+    var comingFrom: Direction? = null
+    while (currentPipe.type != PipeType.START || stepCounter == 0) {
+        for (direction in currentPipe.getPossibleDirections(comingFrom)) {
+            val neighborPosition = currentPipe.getNeighbor(direction)
+            val neighborPipe = pipes[neighborPosition] ?: Pipe(PipeType.NONE, Position(0, 0))
 
-        var stepCounter = 0
-        var currentPipe: Pipe = start
-        var comingFrom: Direction? = null
-        while (currentPipe.type != PipeType.START || stepCounter == 0) {
-            for (direction in currentPipe.getPossibleDirections(comingFrom)) {
-                val neighborPosition = currentPipe.getNeighbor(direction)
-                val neighborPipe = pipes[neighborPosition] ?: Pipe(PipeType.NONE, Position(0, 0))
-
-                if (currentPipe.canConnect(neighborPipe, direction)) {
-                    println("Step $stepCounter: Moving $direction from $currentPipe to $neighborPipe")
-                    stepCounter++
-                    comingFrom = direction
-                    currentPipe = neighborPipe
-                    break
-                }
+            if (currentPipe.canConnect(neighborPipe, direction)) {
+                println("Step $stepCounter: Moving $direction from $currentPipe to $neighborPipe")
+                stepCounter++
+                comingFrom = direction
+                currentPipe = neighborPipe
+                break
             }
         }
-
-        return stepCounter / 2
     }
 
+    return stepCounter / 2
+}
+
+fun main() {
     val testInput = readInputLines("Ex10_test")
     check(solve(testInput) == 8)
 
